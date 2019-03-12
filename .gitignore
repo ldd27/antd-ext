@@ -1,0 +1,6 @@
+node_modules
+.docz
+dist
+.umi
+yarn.lock
+yarn-error.log
