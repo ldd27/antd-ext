@@ -1,6 +1,6 @@
 {
   "name": "antd-ext",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "license": "MIT",
@@ -11,7 +11,7 @@
     "dev": "umi-lib build --watch",
     "build": "umi-lib build",
     "test": "umi-test",
-    "pub": "yarn publish",
+    "pub": "yarn run build && yarn publish",
     "doc:dev": "umi-lib doc dev",
     "doc:build": "umi-lib doc build",
     "doc:deploy": "umi-lib doc deploy"
