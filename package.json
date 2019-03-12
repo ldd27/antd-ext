@@ -11,7 +11,7 @@
     "dev": "umi-lib build --watch",
     "build": "umi-lib build",
     "test": "umi-test",
-    "pub": "yarn run test && yarn publish",
+    "pub": "yarn publish",
     "doc:dev": "umi-lib doc dev",
     "doc:build": "umi-lib doc build",
     "doc:deploy": "umi-lib doc deploy"
