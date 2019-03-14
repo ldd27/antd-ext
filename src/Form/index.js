@@ -1,6 +1,5 @@
 import React, { Children } from 'react';
 import { Form } from 'antd';
-import { getFormItemProps } from '../utils';
 
 class DDForm extends Form {
 
