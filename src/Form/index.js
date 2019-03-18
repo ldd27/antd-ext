@@ -5,6 +5,10 @@ class DDForm extends Form {
 
   renderChildren(children, form) {
     return Children.map(children, child => {
+      if (!child) return;
+      if (typeof child === 'string') {
+        return child;
+      }
       const { id, ...childProps } = child.props;
       if (id === undefined) {
         const newChildren = this.renderChildren(child.props.children, form)

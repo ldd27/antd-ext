@@ -5,18 +5,8 @@ import { createRules } from '../utils';
 const FormItem = ({
   id,
   init,
-  required,
   showRequired,
   rules,
-  url,
-  idCard,
-  max,
-  phone,
-  telephone,
-  numberAndLetter,
-  email,
-  specialChar,
-  ip,
   labelCol,
   wrapperCol,
   label,
@@ -24,6 +14,7 @@ const FormItem = ({
   editable,
   help,
   children,
+  valuePropName = 'value',
   ...inputPorps
 }) => {
   if (!form) {
@@ -49,6 +40,7 @@ const FormItem = ({
         getFieldDecorator(id, {
           initialValue: init,
           rules: createRules(label, id, rules),
+          valuePropName,
         })(children)
       }
     </Form.Item>
