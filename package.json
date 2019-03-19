@@ -1,6 +1,6 @@
 {
   "name": "antd-ext",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "license": "MIT",
@@ -22,8 +22,8 @@
     "react": "^16.8.4"
   },
   "devDependencies": {
+    "babel-plugin-import": "^1.11.0",
     "umi-library": "^1.1.1",
-    "umi-test": "^1.4.4",
-    "babel-plugin-import": "^1.11.0"
+    "umi-test": "^1.4.4"
   }
 }
