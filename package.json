@@ -1,11 +1,13 @@
 {
   "name": "antd-ext",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "license": "MIT",
   "files": [
-    "dist"
+    "dist",
+    "lib",
+    "es"
   ],
   "scripts": {
     "dev": "umi-lib build --watch",
