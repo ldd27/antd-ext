@@ -1,6 +1,6 @@
-import { Input, Row, Col, Typography } from 'antd';
+import { Input, Row, Col, Typography, message } from 'antd';
 import "antd/dist/antd.css";
-import { Form, FormInput, FormSelect, FormItem } from '../../../dist';
+import { Form, FormInput, FormSelect, FormItem, FormUpload } from '../../../dist';
 
 const { Paragraph } = Typography;
 
@@ -44,6 +44,31 @@ const ExampleForm = ({ form }) => {
       >
         <Paragraph copyable>22222</Paragraph>
       </FormItem>
+      <FormUpload
+        id="upload"
+        init={{ full_url: 'https://chain-static.codoon.com/upload/2019-03-21/a276000e-621a-4d28-9a24-3d28361e66a3.png!large' }}
+        name="image"
+        action="http://localhost:9003/v1/club_admin/upload_image?club_id=1&club_user_id=1"
+        label="upload"
+        labelCol={{ span: 4 }}
+        wrapperCol={{ span: 14 }}
+        // dim={{ width: 100, height: 100 }}
+        formatApi={res => {
+          if (!res) {
+            message.error('服务器繁忙')
+            return false;
+          }
+
+          if (res.url) {
+            return { url: res.url, full_url: res.url }
+          } else {
+            message.error(res.detail || '服务器繁忙')
+            return false;
+          }
+        }}
+        // editable={false}
+        rules={['required']}
+      />
     </Form>
   )
 }

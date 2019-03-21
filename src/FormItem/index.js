@@ -13,6 +13,7 @@ const FormItem = ({
   form,
   editable,
   help,
+  extra,
   children,
   valuePropName = 'value',
   ...inputPorps
@@ -34,6 +35,7 @@ const FormItem = ({
       labelCol={labelCol}
       wrapperCol={wrapperCol}
       help={help}
+      extra={extra}
       required={inputPorps.editable && required && showRequired}
     >
       {

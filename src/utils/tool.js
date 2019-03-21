@@ -10,6 +10,7 @@ export const getFormItemProps = (props) => {
     form,
     editable,
     help,
+    extra,
     ...restProps
   } = props;
 
@@ -24,6 +25,7 @@ export const getFormItemProps = (props) => {
     form,
     editable,
     help,
+    extra,
   }, restProps];
 }
 

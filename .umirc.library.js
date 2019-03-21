@@ -5,6 +5,7 @@ export default {
   doc: {
     base: '/antd-ext'
   },
+  cssModules: true,
   extraBabelPlugins: [
     ['babel-plugin-import', {
       libraryName: 'antd',
