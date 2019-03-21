@@ -1,6 +1,6 @@
 {
   "name": "antd-ext",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "license": "MIT",
@@ -18,11 +18,8 @@
   },
   "dependencies": {
     "antd": "^3.15.0",
-    "image-size": "^0.7.2",
     "lodash": "^4.17.11",
-    "react": "^16.8.4",
-    "react-cropper": "^1.2.0",
-    "react-image-crop": "^6.0.18"
+    "react": "^16.8.4"
   },
   "devDependencies": {
     "babel-plugin-import": "^1.11.0",
