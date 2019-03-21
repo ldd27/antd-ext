@@ -66,9 +66,11 @@ const ExampleForm = ({ form }) => {
             return false;
           }
         }}
-        // editable={false}
+        editable={false}
+        preview
         rules={['required']}
       />
+      
     </Form>
   )
 }

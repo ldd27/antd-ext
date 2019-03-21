@@ -1,15 +1,16 @@
 import React from 'react';
 import FormItem from '../FormItem';
 import Upload from '../Upload';
+import Image from '../Image';
 import { getFormItemProps } from '../utils';
-import styles from './index.less'
 
 const FormUpload = (props) => {
   const [formItemProps, restProps] = getFormItemProps(props);
   const {
     editable,
     init,
-    style = {
+    preview,
+    imageStyle = {
       width: 128,
       height: 128,
       margin: -1,
@@ -19,7 +20,7 @@ const FormUpload = (props) => {
   if (editable === false) {
     return (
       <FormItem {...formItemProps}>
-        <img src={init && init.full_url} alt="" style={style} />
+        <Image src={init && init.full_url} style={imageStyle} preview={preview} />
       </FormItem>
     );
   }
