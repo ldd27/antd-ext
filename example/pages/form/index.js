@@ -1,6 +1,6 @@
 import { Input, Row, Col, Typography, message } from 'antd';
 import "antd/dist/antd.css";
-import { Form, FormInput, FormSelect, FormItem, FormUpload } from '../../../dist';
+import { Form, FormInput, FormSelect, FormItem, FormUpload, FormRadio } from '../../../dist';
 
 const { Paragraph } = Typography;
 
@@ -70,7 +70,15 @@ const ExampleForm = ({ form }) => {
         preview
         rules={['required']}
       />
-      
+      <FormRadio
+        labelCol={{ span: 4 }}
+        wrapperCol={{ span: 14 }}
+        id="radio"
+        init={1}
+        label="radio"
+        options={[{ value: 1, label: 'test1' }, { value: 2, label: 'test2' }]}
+        buttonStyle="solid"
+      />
     </Form>
   )
 }
