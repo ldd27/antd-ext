@@ -1,9 +1,19 @@
-import { Input, Row, Col, Typography, message } from 'antd';
+import { Input, Row, Col, Typography, message, Button } from 'antd';
+import moment from 'moment';
 import "antd/dist/antd.css";
-import { Form, FormInput, FormSelect, FormItem, FormUpload, FormRadio } from '../../../dist';
+import { 
+  Form, 
+  FormInput, 
+  FormSelect, 
+  FormItem, 
+  FormUpload, 
+  FormRadio, 
+  FormDatePicker, 
+  FormInputNumber,
+  FormTextArea,
+} from '../../../dist';
 
 const { Paragraph } = Typography;
-
 const ExampleForm = ({ form }) => {
   return (
     <Form api={form} layout="horizontal">
@@ -37,7 +47,6 @@ const ExampleForm = ({ form }) => {
         null
       }
       <FormItem
-        id="api_token"
         label="ccc"
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 14 }}
@@ -53,6 +62,7 @@ const ExampleForm = ({ form }) => {
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 14 }}
         // dim={{ width: 100, height: 100 }}
+        listType="picture"
         formatApi={res => {
           if (!res) {
             message.error('服务器繁忙')
@@ -66,9 +76,11 @@ const ExampleForm = ({ form }) => {
             return false;
           }
         }}
-        editable={false}
+        imageStyle={{ width: 338, height: 140 }}
+        // editable={false}
         preview
         rules={['required']}
+        right={<Button style={{ marginLeft: 8 }} onClick={e => e.stopPropagation()}>换一换</Button>}
       />
       <FormRadio
         labelCol={{ span: 4 }}
@@ -78,6 +90,39 @@ const ExampleForm = ({ form }) => {
         label="radio"
         options={[{ value: 1, label: 'test1' }, { value: 2, label: 'test2' }]}
         buttonStyle="solid"
+      />
+      <FormDatePicker
+        labelCol={{ span: 4 }}
+        wrapperCol={{ span: 14 }}
+        id="date_picker"
+        label="date_picker"
+        init={moment()}
+        // editable={false}
+        style={{ width: 300 }}
+        showTime
+        format="YYYY-MM-DD HH:mm:ss"
+      />
+      <FormInputNumber
+        labelCol={{ span: 4 }}
+        wrapperCol={{ span: 14 }}
+        id="input_number"
+        label="input_number"
+        init={1111}
+        // editable={false}
+        style={{ width: 300 }}
+      />
+      <FormTextArea
+        labelCol={{ span: 4 }}
+        wrapperCol={{ span: 14 }}
+        id="text_area"
+        label="text_area"
+        init="text_area"
+        // editable={false}
+        style={{ width: 300 }}
+        autosize={{
+          minRows: 4,
+          maxRows: 10
+        }}
       />
     </Form>
   )

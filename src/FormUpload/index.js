@@ -19,7 +19,7 @@ const FormUpload = (props) => {
 
   if (editable === false) {
     return (
-      <FormItem {...formItemProps}>
+      <FormItem {...formItemProps} form={undefined}>
         <Image src={init && init.full_url} style={imageStyle} preview={preview} />
       </FormItem>
     );
@@ -27,7 +27,7 @@ const FormUpload = (props) => {
 
   return (
     <FormItem {...formItemProps}>
-      <Upload {...restProps} />
+      <Upload {...restProps} imageStyle={imageStyle} />
     </FormItem>
   );
 };

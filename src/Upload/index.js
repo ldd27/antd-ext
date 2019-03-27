@@ -1,6 +1,13 @@
 import React, { Fragment, Component } from 'react';
-import { Upload, Icon, message } from 'antd';
-import styles from './index.less'
+import { Upload, Icon, message, Button } from 'antd';
+import Image from '../Image';
+// import styles from './index.less';
+
+const defaultImageStyle = {
+  width: 128,
+  height: 128,
+  margin: -1,
+}
 
 class DDUpload extends Component {
   state = {
@@ -102,7 +109,14 @@ class DDUpload extends Component {
   }
 
   render() {
-    const { value, children, listType = 'picture-card', ...restProps } = this.props;
+    const { 
+      value, 
+      children, 
+      listType = 'picture-card', 
+      imageStyle = defaultImageStyle, 
+      right,
+      ...restProps
+    } = this.props;
     const { loading } = this.state;
 
     const uploadProps = {
@@ -113,17 +127,33 @@ class DDUpload extends Component {
       ...restProps,
     }
 
-    const uploadButton = (
+    let uploadButton = (
       <div>
         <Icon type={loading ? 'loading' : 'plus'} />
         <div className="ant-upload-text">上传</div>
       </div>
     );
+    if (listType !== 'picture-card') {
+      uploadButton = <Button type="primary">上传</Button>
+    }
 
+    if (listType === 'picture-card') {
+      return (
+        <Fragment>
+          <Upload {...uploadProps} onChange={this.handleChange}>
+            {value && value.full_url ? <Image src={value.full_url} style={listType === 'picture-card' ? defaultImageStyle : imageStyle} /> : uploadButton}
+          </Upload>
+        </Fragment>
+      );
+    } else {
+
+    }
     return (
       <Fragment>
         <Upload {...uploadProps} onChange={this.handleChange}>
-          {value && value.full_url ? <img src={value.full_url} alt="" className={styles.img} /> : uploadButton}
+          {value && value.full_url ? <Image src={value.full_url} style={listType === 'picture-card' ? defaultImageStyle : imageStyle} /> : null}
+          <Button type="primary" style={{ marginLeft: 8 }}>上传</Button>
+          {right}
         </Upload>
       </Fragment>
     );
