@@ -15,6 +15,7 @@ const FormItem = ({
   help,
   extra,
   children,
+  onChange,
   valuePropName = 'value',
   ...inputPorps
 }) => {
@@ -42,6 +43,7 @@ const FormItem = ({
         getFieldDecorator(id, {
           initialValue: init,
           rules: createRules(label, id, rules),
+          onChange,
           valuePropName,
         })(children)
       }

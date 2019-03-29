@@ -11,6 +11,7 @@ export const getFormItemProps = (props) => {
     editable,
     help,
     extra,
+    onChange,
     ...restProps
   } = props;
 
@@ -26,6 +27,7 @@ export const getFormItemProps = (props) => {
     editable,
     help,
     extra,
+    onChange,
   }, restProps];
 }
 
