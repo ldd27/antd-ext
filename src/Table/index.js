@@ -33,7 +33,6 @@ const DDTable = ({ page, showScroll, showIndex, ...tableProps }) => {
   const newTableProps = {
     ...tableProps,
     pagination: tableProps.pagination && (total > pageSize) ? tableProps.pagination : false,
-    rowKey: tableProps.rowKey ? tableProps.rowKey : (record, index) => index,
     size: tableProps.size ? tableProps.size : 'small',
     bordered: tableProps.bordered !== undefined ? tableProps.bordered : true,
     // scroll: showScroll ? { x: 1024 } : {},

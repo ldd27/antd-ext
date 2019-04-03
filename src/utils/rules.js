@@ -7,6 +7,7 @@ let config = {
   type: '{label}格式错误',
   max: '不得超过 {max} 个字',
   min: '不得少于 {min} 个字',
+  specialChar: '{label}不能包含特殊字符或空格',
 };
 
 const ruleCreator = {
@@ -68,10 +69,23 @@ const ruleCreator = {
     message: config.type.replace('{label}', label),
   }),
   specialChar: (label) => ({
-    pattern: /[(\ )(\~)(\!)(\@)(\#)(\$)(\%)(\^)(\&)(\*)(\()(\))(\-)(\_)(\+)(\=)(\[)(\])(\{)(\})(\|)(\\)(\;)(\:)(\')(\")(\,)(\.)(\/)(\<)(\>)(\?)(\)]+/,
-    whitespace: true,
-    message: config.type.replace('{label}', label),
+    validator(rule, value, callback) {
+      const containSpecial = RegExp(/[(\ )(\~)(\!)(\@)(\#)(\$)(\%)(\^)(\&)(\*)(\()(\))(\-)(\_)(\+)(\=)(\[)(\])(\{)(\})(\|)(\\)(\;)(\:)(\')(\")(\,)(\.)(\/)(\<)(\>)(\?)(\)]+/)
+
+      if (!value || value === '') {
+        callback();
+      } else if (!containSpecial.test(value)) {
+        callback();
+      } else {
+        callback(config.specialChar.replace('{label}', label));
+      }
+    },
   }),
+  // specialChar: (label) => ({
+  //   pattern: /[(\ )(\~)(\!)(\@)(\#)(\$)(\%)(\^)(\&)(\*)(\()(\))(\-)(\_)(\+)(\=)(\[)(\])(\{)(\})(\|)(\\)(\;)(\:)(\')(\")(\,)(\.)(\/)(\<)(\>)(\?)(\)]+/,
+  //   whitespace: true,
+  //   message: config.specialChar.replace('{label}', label),
+  // }),
 };
 
 const ruleList = Object.keys(ruleCreator);

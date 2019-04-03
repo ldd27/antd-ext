@@ -1,13 +1,5 @@
 import React, { Fragment, Component } from 'react';
-import { Upload, Icon, message, Button } from 'antd';
-import Image from '../Image';
-// import styles from './index.less';
-
-const defaultImageStyle = {
-  width: 128,
-  height: 128,
-  margin: -1,
-}
+import { Upload, message } from 'antd';
 
 class DDUpload extends Component {
   state = {
@@ -113,8 +105,6 @@ class DDUpload extends Component {
       value, 
       children, 
       listType = 'picture-card', 
-      imageStyle = defaultImageStyle, 
-      right,
       ...restProps
     } = this.props;
     const { loading } = this.state;
@@ -127,33 +117,10 @@ class DDUpload extends Component {
       ...restProps,
     }
 
-    let uploadButton = (
-      <div>
-        <Icon type={loading ? 'loading' : 'plus'} />
-        <div className="ant-upload-text">上传</div>
-      </div>
-    );
-    if (listType !== 'picture-card') {
-      uploadButton = <Button type="primary">上传</Button>
-    }
-
-    if (listType === 'picture-card') {
-      return (
-        <Fragment>
-          <Upload {...uploadProps} onChange={this.handleChange}>
-            {value && value.full_url ? <Image src={value.full_url} style={listType === 'picture-card' ? defaultImageStyle : imageStyle} /> : uploadButton}
-          </Upload>
-        </Fragment>
-      );
-    } else {
-
-    }
     return (
       <Fragment>
         <Upload {...uploadProps} onChange={this.handleChange}>
-          {value && value.full_url ? <Image src={value.full_url} style={listType === 'picture-card' ? defaultImageStyle : imageStyle} /> : null}
-          <Button type="primary" style={{ marginLeft: 8 }}>上传</Button>
-          {right}
+          {children(value, loading)}
         </Upload>
       </Fragment>
     );
