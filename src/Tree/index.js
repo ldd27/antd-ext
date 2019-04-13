@@ -22,9 +22,9 @@ const DDTree = ({
   //   }
   // }
   // genKeys(dataSource)
-  const getTitle = (item) => {
+  const getTitle = (item, selectedKeys) => {
     if (typeof title === 'function') {
-      return title(item);
+      return title(item, selectedKeys);
     }
     return item[title || 'title'];
   };
@@ -32,7 +32,7 @@ const DDTree = ({
     if (item.children) {
       return (
         <TreeNode title={getTitle(item, selectedKeys)} disabled={item.disabled} key={`${item.key}`} dataRef={item}>
-          {genTreeNodes(item.children)}
+          {genTreeNodes(item.children, selectedKeys)}
         </TreeNode>
       );
     }
