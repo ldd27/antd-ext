@@ -9,6 +9,7 @@ const DDTree = ({
   onSelect,
   directoryTree,
   loading,
+  empty,
   ...treeProps
 }) => {
   selectTree = selectTree || {};
@@ -27,15 +28,15 @@ const DDTree = ({
     }
     return item[title || 'title'];
   };
-  const genTreeNodes = data => data.map((item) => {
+  const genTreeNodes = (data, selectedKeys) => data.map((item) => {
     if (item.children) {
       return (
-        <TreeNode title={getTitle(item)} disabled={item.disabled} key={`${item.key}`} dataRef={item}>
+        <TreeNode title={getTitle(item, selectedKeys)} disabled={item.disabled} key={`${item.key}`} dataRef={item}>
           {genTreeNodes(item.children)}
         </TreeNode>
       );
     }
-    return (<TreeNode title={getTitle(item)} disabled={item.disabled} isLeaf={item.isLeaf} key={`${item.key}`} dataRef={item} />);
+    return (<TreeNode title={getTitle(item, selectedKeys)} disabled={item.disabled} isLeaf={item.isLeaf} key={`${item.key}`} dataRef={item} />);
   });
   const getTreeKeys = (nodes) => {
     if (!nodes || nodes.length === 0) {
@@ -71,15 +72,17 @@ const DDTree = ({
     return obj;
   };
 
+  const selectedKeys = getTreeData(selectTree, dataSource, true);
+
   treeProps = {
     showLine: true,
     defaultExpandAll: true,
     blockNode: true,
     defaultExpandedKeys: getTreeKeys(dataSource),
-    selectedKeys: [(getTreeData(selectTree, dataSource, true) || {}).key],
+    selectedKeys: [(selectedKeys || {}).key],
     onSelect(keys) {
       if (!keys || keys.length === 0) {
-        const obj = getTreeData(selectTree, dataSource, true);
+        const obj = selectedKeys;
         onSelect(obj.data, obj);
       } else {
         const obj = getTreeData(keys[0], dataSource);
@@ -103,6 +106,7 @@ const DDTree = ({
   }
 
   if (dataSource.length === 0) {
+    if (empty) return empty;
     return <span>暂无数据</span>;
   }
 
@@ -112,7 +116,7 @@ const DDTree = ({
         {...treeProps}
         style={treeStyle}
       >
-        {genTreeNodes(dataSource)}
+        {genTreeNodes(dataSource, selectedKeys)}
       </Tree.DirectoryTree>
     )
   }
@@ -122,7 +126,7 @@ const DDTree = ({
       {...treeProps}
       style={treeStyle}
     >
-      {genTreeNodes(dataSource)}
+      {genTreeNodes(dataSource, selectedKeys)}
     </Tree>
   );
 };
