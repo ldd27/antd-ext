@@ -15,15 +15,34 @@ import {
 
 const { Paragraph } = Typography;
 const ExampleForm = ({ form }) => {
+  const onSave = () => {
+    form.validateFields(errors => {
+      if (errors) {
+        return;
+      }
+     
+      console.log(form.getFieldsValue().number, typeof form.getFieldsValue().number)
+    });
+  }
+
   return (
     <Form api={form} layout="horizontal">
+      <Button type="primary" onClick={onSave}>保存</Button>
+      <FormInput
+        id="number"
+        init="vvv"
+        label="ccc"
+        labelCol={{ span: 4 }}
+        wrapperCol={{ span: 14 }}
+        rules={['required', 'number', 'minNum=1', 'maxNum=10']}
+      />
       <FormInput
         id="d1d"
         init="vvv"
         label="ccc"
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 14 }}
-        rules={['required', 'phone']}
+        // rules={['required', 'phone']}
       />
       <FormInput
         id="d3d"
@@ -31,7 +50,7 @@ const ExampleForm = ({ form }) => {
         label="ccc"
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 14 }}
-        rules={['required', 'id']}
+        // rules={['required', 'id']}
       />
       <FormSelect
         id="aaadd"
@@ -81,7 +100,9 @@ const ExampleForm = ({ form }) => {
         preview
         rules={['required']}
         right={<Button style={{ marginLeft: 8 }} onClick={e => e.stopPropagation()}>换一换</Button>}
-      />
+      >
+        {(value, loading) => <span>111</span>}
+      </FormUpload>
       <FormRadio
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 14 }}

@@ -8,6 +8,9 @@ let config = {
   max: '不得超过 {max} 个字',
   min: '不得少于 {min} 个字',
   specialChar: '{label}不能包含特殊字符或空格',
+  minNumber: '{label}不能小于{min}',
+  maxNumber: '{label}不能大于{max}',
+  number: '{label}必须为数字',
 };
 
 const ruleCreator = {
@@ -23,7 +26,7 @@ const ruleCreator = {
   number: (label) => ({
     pattern: /^\d+$/,
     whitespace: true,
-    message: config.type.replace('{label}', label),
+    message: config.number.replace('{label}', label),
   }),
   email: (label) => ({
     type: 'email',
@@ -35,11 +38,11 @@ const ruleCreator = {
     whitespace: true,
     message: config.type.replace('{label}', label),
   }),
-  max: (max) => ({
+  max: (label, max) => ({
     max,
     message: config.max.replace('{max}', max),
   }),
-  min: (min) => ({
+  min: (label, min) => ({
     min,
     message: config.min.replace('{min}', min),
   }),
@@ -81,6 +84,29 @@ const ruleCreator = {
       }
     },
   }),
+  minNum: (label, min) => ({
+    validator(rule, value, callback) {
+      console.log(value)
+      if (!value && value !== 0) {
+        callback();
+      } else if (value < min) {
+        callback(config.minNumber.replace('{label}', label).replace('{min}', min));
+      } else {
+        callback();
+      }
+    },
+  }),
+  maxNum: (label, max) => ({
+    validator(rule, value, callback) {
+      if (!value && value !== 0) {
+        callback();
+      } else if (parseInt(value, 10) > max) {
+        callback(config.maxNumber.replace('{label}', label).replace('{max}', max));
+      } else {
+        callback();
+      }
+    },
+  }),
   // specialChar: (label) => ({
   //   pattern: /[(\ )(\~)(\!)(\@)(\#)(\$)(\%)(\^)(\&)(\*)(\()(\))(\-)(\_)(\+)(\=)(\[)(\])(\{)(\})(\|)(\\)(\;)(\:)(\')(\")(\,)(\.)(\/)(\<)(\>)(\?)(\)]+/,
   //   whitespace: true,
@@ -102,7 +128,7 @@ export const createRules = (label = '', id, rules = []) =>
     }
     // e.g. "max=5"
     const [key, val] = rule.split('=');
-    if (!createRules[ruleKey]) createRules[ruleKey] = ruleCreator[key](Number(val));
+    if (!createRules[ruleKey]) createRules[ruleKey] = ruleCreator[key](label, Number(val));
     return createRules[ruleKey];
   });
   

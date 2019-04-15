@@ -16,7 +16,9 @@ const FormItem = ({
   extra,
   children,
   onChange,
+  getValueFromEvent,
   valuePropName = 'value',
+  validateFirst = true,
   ...inputPorps
 }) => {
   if (!form) {
@@ -45,6 +47,8 @@ const FormItem = ({
           rules: createRules(label, id, rules),
           onChange,
           valuePropName,
+          getValueFromEvent,
+          validateFirst,
         })(children)
       }
     </Form.Item>

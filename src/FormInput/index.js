@@ -8,6 +8,7 @@ const FormInput = (props) => {
   const [formItemProps, restProps] = getFormItemProps(props);
   const {
     editable,
+    init,
   } = props;
 
   if (editable === false) {
@@ -16,8 +17,30 @@ const FormInput = (props) => {
     );
   }
 
+  let newProps = {
+    ...formItemProps,
+  }
+  if (formItemProps.rules && formItemProps.rules.includes('number')) {
+    newProps = {
+      ...newProps,
+      initialValue: init ? init.toString() : '',
+      getValueFromEvent(e) {
+        if (!e || !e.target) {
+          return e;
+        }
+        const { target } = e;
+
+        if (target.value === '' || isNaN(target.value)) {
+          return target.value;
+        }
+
+        return parseInt(target.value, 10);
+      }
+    }
+  }
+
   return (
-    <FormItem {...formItemProps}>
+    <FormItem {...newProps}>
       <Input {...restProps} />
     </FormItem>
   );

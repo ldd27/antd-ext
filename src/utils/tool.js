@@ -12,6 +12,7 @@ export const getFormItemProps = (props) => {
     help,
     extra,
     onChange,
+    validateFirst,
     ...restProps
   } = props;
 
@@ -28,6 +29,7 @@ export const getFormItemProps = (props) => {
     help,
     extra,
     onChange,
+    validateFirst,
   }, restProps];
 }
 
