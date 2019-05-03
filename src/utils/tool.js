@@ -13,6 +13,8 @@ export const getFormItemProps = (props) => {
     extra,
     onChange,
     validateFirst,
+    before,
+    after,
     ...restProps
   } = props;
 
@@ -29,6 +31,8 @@ export const getFormItemProps = (props) => {
     help,
     extra,
     onChange,
+    before,
+    after,
     validateFirst,
   }, restProps];
 }

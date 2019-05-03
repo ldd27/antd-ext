@@ -19,6 +19,8 @@ const FormItem = ({
   getValueFromEvent,
   valuePropName = 'value',
   validateFirst = true,
+  before,
+  after,
   ...inputPorps
 }) => {
   if (!form) {
@@ -42,6 +44,9 @@ const FormItem = ({
       required={inputPorps.editable && required && showRequired}
     >
       {
+        before
+      }
+      {
         getFieldDecorator(id, {
           initialValue: init,
           rules: createRules(label, id, rules),
@@ -50,6 +55,9 @@ const FormItem = ({
           getValueFromEvent,
           validateFirst,
         })(children)
+      }
+      {
+        after
       }
     </Form.Item>
   );

@@ -131,6 +131,8 @@ const ExampleForm = ({ form }) => {
         init={1111}
         // editable={false}
         style={{ width: 300 }}
+        before={<span>111&nbsp;</span>}
+        after={<span>&nbsp;222</span>}
       />
       <FormTextArea
         labelCol={{ span: 4 }}
