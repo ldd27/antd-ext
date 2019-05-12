@@ -36,7 +36,7 @@ const FormSelect = (props) => {
   return (
     <FormItem {...formItemProps}>
       <Select {...restProps}>
-        {newOptions.map(option => (<Select.Option key={option[optionValue || 'value'].toString()} value={option[optionValue || 'value'].toString()}>{getSelectLabel(option, optionLabel)}</Select.Option>))}
+        {newOptions.map(option => (<Select.Option key={option[optionValue || 'value']} value={option[optionValue || 'value']}>{getSelectLabel(option, optionLabel)}</Select.Option>))}
       </Select>
     </FormItem>
   );
