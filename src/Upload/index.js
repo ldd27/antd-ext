@@ -81,8 +81,10 @@ class DDUpload extends Component {
   }
 
   handleChange = (info) => {
+    const { onProgress } = this.props;
     if (info.file.status === 'uploading') {
       this.setState({ loading: true });
+      onProgress('uploading', {})
       return;
     }
 
@@ -90,12 +92,14 @@ class DDUpload extends Component {
     
     if (info.file.status === "done") {
       this.setState({ loading: false });
+      onProgress('done', info.file.response)
       const result = formatApi(info.file.response);
       if (result) {
         this.props.onChange(result)
       }
     } else if (info.file.status === "error") {
       this.setState({ loading: false });
+      onProgress('error', info.file.response)
       formatApi(info.file.response)
     }
   }
