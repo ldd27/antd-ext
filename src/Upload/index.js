@@ -21,7 +21,7 @@ class DDUpload extends Component {
           throw new Error('只支持png、jpeg、gif格式图片');
         }
       }
-    } else if (typeof ext === 'array') {
+    } else if (typeof ext === 'object') {
       const match = ext.includes(file.type);
       if (!match) {
         message.error("文件格式错误");
@@ -84,7 +84,7 @@ class DDUpload extends Component {
     const { onProgress } = this.props;
     if (info.file.status === 'uploading') {
       this.setState({ loading: true });
-      onProgress('uploading', {})
+      onProgress && onProgress('uploading', {})
       return;
     }
 
@@ -92,14 +92,14 @@ class DDUpload extends Component {
     
     if (info.file.status === "done") {
       this.setState({ loading: false });
-      onProgress('done', info.file.response)
+      onProgress && onProgress('done', info.file.response)
       const result = formatApi(info.file.response);
       if (result) {
         this.props.onChange(result)
       }
     } else if (info.file.status === "error") {
       this.setState({ loading: false });
-      onProgress('error', info.file.response)
+      onProgress && onProgress('error', info.file.response)
       formatApi(info.file.response)
     }
   }
