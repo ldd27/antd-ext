@@ -17,3 +17,4 @@ export { default as FormUpload } from "./FormUpload";
 export { default as FormRadio } from "./FormRadio";
 export { default as FormDatePicker } from "./FormDatePicker";
 export { default as FormTextArea } from "./FormTextArea";
+export { default as FormCheckbox } from "./FormCheckbox";

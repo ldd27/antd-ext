@@ -19,7 +19,8 @@ import {
   FormDatePicker,
   FormInputNumber,
   FormTextArea,
-  FormLabel
+  FormLabel,
+  FormCheckbox
 } from "../../../dist";
 
 const Test = form => {
@@ -175,6 +176,15 @@ const ExampleForm = ({ form }) => {
         id="radio"
         init={1}
         label="radio"
+        options={[{ value: 1, label: "test1" }, { value: 2, label: "test2" }]}
+        buttonStyle="solid"
+      />
+      <FormCheckbox
+        labelCol={{ span: 4 }}
+        wrapperCol={{ span: 14 }}
+        id="checkbox"
+        init={[1]}
+        label="checkbox"
         options={[{ value: 1, label: "test1" }, { value: 2, label: "test2" }]}
         buttonStyle="solid"
       />
