@@ -140,7 +140,8 @@ const ExampleForm = ({ form }) => {
         name="image"
         action="http://localhost:9003/v1/club_admin/upload_image?club_id=1&club_user_id=1"
         label="upload"
-        ext={["video/mp4"]}
+        // ext={["video/mp4"]}
+        ext={["application/zip"]}
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 14 }}
         // dim={{ width: 100, height: 100 }}
