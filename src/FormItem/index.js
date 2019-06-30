@@ -32,9 +32,16 @@ export default class FormItem extends Form.Item {
       ...inputPorps
     } = this.props;
 
+    const layout = {
+      labelCol,
+      wrapperCol
+    };
+    if (!labelCol) delete layout.labelCol;
+    if (!wrapperCol) delete layout.wrapperCol;
+
     if (!form) {
       return (
-        <Form.Item label={label} labelCol={labelCol} wrapperCol={wrapperCol}>
+        <Form.Item label={label} {...layout}>
           {children}
         </Form.Item>
       );
@@ -42,12 +49,6 @@ export default class FormItem extends Form.Item {
 
     // getFieldDecorator不能装饰纯函数组件
     const { getFieldDecorator } = form;
-    const layout = {
-      labelCol,
-      wrapperCol
-    };
-    if (!labelCol) delete layout.labelCol;
-    if (!wrapperCol) delete layout.wrapperCol;
     return (
       <Form.Item
         label={label}

@@ -195,7 +195,7 @@ const ExampleForm = ({ form }) => {
         id="date_picker"
         label="date_picker"
         init={moment()}
-        // editable={false}
+        editable={false}
         style={{ width: 300 }}
         showTime
         format="YYYY-MM-DD HH:mm:ss"
@@ -217,7 +217,7 @@ const ExampleForm = ({ form }) => {
         id="text_area"
         label="text_area"
         init="text_area"
-        // editable={false}
+        editable={false}
         style={{ width: 300 }}
         autosize={{
           minRows: 4,
