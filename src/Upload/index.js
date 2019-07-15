@@ -1,32 +1,32 @@
-import React, { Fragment, Component } from "react";
-import { Upload, message } from "antd";
+import React, { Fragment, Component } from 'react';
+import { Upload, message } from 'antd';
 
 class DDUpload extends Component {
   state = {
-    loading: false
+    loading: false,
   };
 
   beforeUpload = async file => {
-    const { ext = "image", maxSize, minSize, dim } = this.props;
+    const { ext = 'image', maxSize, minSize, dim } = this.props;
     console.log(file.type);
     // return new Promise((resolve, reject) => {
-    if (typeof ext === "string") {
-      if (ext === "image") {
+    if (typeof ext === 'string') {
+      if (ext === 'image') {
         const isImage =
-          file.type === "image/jpeg" ||
-          file.type === "image/png" ||
-          file.type === "image/jpg" ||
-          file.type === "image/gif";
+          file.type === 'image/jpeg' ||
+          file.type === 'image/png' ||
+          file.type === 'image/jpg' ||
+          file.type === 'image/gif';
         if (!isImage) {
-          message.error("只支持png、jpeg、gif格式图片");
-          throw new Error("只支持png、jpeg、gif格式图片");
+          message.error('只支持png、jpeg、gif格式图片');
+          throw new Error('只支持png、jpeg、gif格式图片');
         }
       }
-    } else if (typeof ext === "object") {
+    } else if (typeof ext === 'object') {
       const match = ext.includes(file.type);
       if (!match) {
-        message.error("文件格式错误");
-        throw new Error("文件格式错误");
+        message.error('文件格式错误');
+        throw new Error('文件格式错误');
       }
     }
 
@@ -34,7 +34,7 @@ class DDUpload extends Component {
       const isGT = file.size / 1024 > maxSize;
       if (isGT) {
         message.error(`请上传${maxSize}KB以下文件`);
-        throw new Error("请上传${maxSize}KB以下文件");
+        throw new Error('请上传${maxSize}KB以下文件');
       }
     }
 
@@ -42,7 +42,7 @@ class DDUpload extends Component {
       const isLT = file.size / 1024 > minSize;
       if (isLT) {
         message.error(`请上传${minSize}KB以上文件`);
-        throw new Error("请上传${minSize}KB以上文件");
+        throw new Error('请上传${minSize}KB以上文件');
       }
     }
 
@@ -50,7 +50,7 @@ class DDUpload extends Component {
       const { width, height } = await this.getImageSize(file);
       if (width !== dim.width || height !== dim.height) {
         message.error(`图片尺寸为${dim.width}*${dim.height}，请重新上传`);
-        throw new Error("图片尺寸为${dim.width}*${dim.height}，请重新上传");
+        throw new Error('图片尺寸为${dim.width}*${dim.height}，请重新上传');
       }
     }
 
@@ -82,44 +82,39 @@ class DDUpload extends Component {
   };
 
   handleChange = info => {
-    const { onProgress } = this.props;
-    if (info.file.status === "uploading") {
+    const { onProgress, onChange } = this.props;
+    if (info.file.status === 'uploading') {
       this.setState({ loading: true });
-      onProgress && onProgress("uploading", {});
+      onProgress && onProgress('uploading', {});
       return;
     }
 
     const { formatApi } = this.props;
 
-    if (info.file.status === "done") {
+    if (info.file.status === 'done') {
       this.setState({ loading: false });
-      onProgress && onProgress("done", info.file.response);
+      onProgress && onProgress('done', info.file.response);
       const result = formatApi(info.file.response);
       if (result) {
-        this.props.onChange(result);
+        onChange(result);
       }
-    } else if (info.file.status === "error") {
+    } else if (info.file.status === 'error') {
       this.setState({ loading: false });
-      onProgress && onProgress("error", info.file.response);
+      onProgress && onProgress('error', info.file.response);
       formatApi(info.file.response);
     }
   };
 
   render() {
-    const {
-      value,
-      children,
-      listType = "picture-card",
-      ...restProps
-    } = this.props;
+    const { value, children, listType = 'picture-card', ...restProps } = this.props;
     const { loading } = this.state;
 
     const uploadProps = {
-      name: "file",
+      name: 'file',
       listType,
       beforeUpload: this.beforeUpload,
       showUploadList: false,
-      ...restProps
+      ...restProps,
     };
 
     return (

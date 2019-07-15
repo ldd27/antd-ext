@@ -28,22 +28,36 @@ const DDTree = ({
     }
     return item[title || 'title'];
   };
-  const genTreeNodes = (data, selectedKeys) => data.map((item) => {
-    if (item.children) {
+  const genTreeNodes = (data, selectedKeys) =>
+    data.map(item => {
+      if (item.children) {
+        return (
+          <TreeNode
+            title={getTitle(item, selectedKeys)}
+            disabled={item.disabled}
+            key={`${item.key}`}
+            dataRef={item}
+          >
+            {genTreeNodes(item.children, selectedKeys)}
+          </TreeNode>
+        );
+      }
       return (
-        <TreeNode title={getTitle(item, selectedKeys)} disabled={item.disabled} key={`${item.key}`} dataRef={item}>
-          {genTreeNodes(item.children, selectedKeys)}
-        </TreeNode>
+        <TreeNode
+          title={getTitle(item, selectedKeys)}
+          disabled={item.disabled}
+          isLeaf={item.isLeaf}
+          key={`${item.key}`}
+          dataRef={item}
+        />
       );
-    }
-    return (<TreeNode title={getTitle(item, selectedKeys)} disabled={item.disabled} isLeaf={item.isLeaf} key={`${item.key}`} dataRef={item} />);
-  });
-  const getTreeKeys = (nodes) => {
+    });
+  const getTreeKeys = nodes => {
     if (!nodes || nodes.length === 0) {
       return [];
     }
     const keys = [];
-    nodes.forEach((node) => {
+    nodes.forEach(node => {
       keys.push(node.key);
       const childKeys = getTreeKeys(node.children);
       if (childKeys && childKeys.length > 0) {
@@ -58,8 +72,11 @@ const DDTree = ({
       return null;
     }
     let obj = null;
-    nodes.every((node) => {
-      if ((equalObj && node.data === key) || (!equalObj && node.key === key)) {
+    nodes.every(node => {
+      if (
+        (equalObj && JSON.stringify(node.data) === JSON.stringify(key)) ||
+        (!equalObj && node.key === key)
+      ) {
         obj = node;
         return false;
       }
@@ -112,20 +129,14 @@ const DDTree = ({
 
   if (directoryTree) {
     return (
-      <Tree.DirectoryTree
-        {...treeProps}
-        style={treeStyle}
-      >
+      <Tree.DirectoryTree {...treeProps} style={treeStyle}>
         {genTreeNodes(dataSource, selectedKeys)}
       </Tree.DirectoryTree>
-    )
+    );
   }
 
   return (
-    <Tree
-      {...treeProps}
-      style={treeStyle}
-    >
+    <Tree {...treeProps} style={treeStyle}>
       {genTreeNodes(dataSource, selectedKeys)}
     </Tree>
   );
