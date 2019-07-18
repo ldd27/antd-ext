@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { Form } from "antd";
-import { createRules } from "../utils";
+import React, { Component } from 'react';
+import { Form } from 'antd';
+import { createRules } from '../utils';
 
 export default class FormItem extends Form.Item {
   componentDidMount() {
@@ -25,7 +25,7 @@ export default class FormItem extends Form.Item {
       children,
       onChange,
       getValueFromEvent,
-      valuePropName = "value",
+      valuePropName = 'value',
       validateFirst = true,
       before,
       after,
@@ -34,15 +34,17 @@ export default class FormItem extends Form.Item {
 
     const layout = {
       labelCol,
-      wrapperCol
+      wrapperCol,
     };
     if (!labelCol) delete layout.labelCol;
     if (!wrapperCol) delete layout.wrapperCol;
 
     if (!form) {
       return (
-        <Form.Item label={label} {...layout}>
+        <Form.Item label={label} {...layout} help={help} extra={extra}>
+          {before}
           {children}
+          {after}
         </Form.Item>
       );
     }
@@ -64,7 +66,7 @@ export default class FormItem extends Form.Item {
           onChange,
           valuePropName,
           getValueFromEvent,
-          validateFirst
+          validateFirst,
         })(children)}
         {after}
       </Form.Item>
