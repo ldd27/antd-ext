@@ -126,6 +126,7 @@ const ExampleForm = ({ form }) => {
         label="upload"
         // ext={["video/mp4"]}
         // ext={["application/zip"]}
+        ext={['', 'application/macbinary']}
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 14 }}
         // dim={{ width: 100, height: 100 }}

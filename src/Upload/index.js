@@ -8,7 +8,7 @@ class DDUpload extends Component {
 
   beforeUpload = async file => {
     const { ext = 'image', maxSize, minSize, dim } = this.props;
-    console.log(file.type);
+    console.log('file ext', file.type);
     // return new Promise((resolve, reject) => {
     if (typeof ext === 'string') {
       if (ext === 'image') {
