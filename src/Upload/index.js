@@ -26,7 +26,7 @@ class DDUpload extends Component {
       const match = ext.includes(file.type);
       if (!match) {
         message.error('文件格式错误');
-        throw new Error('文件格式错误');
+        throw new Error(`文件格式错误${file.type}`);
       }
     }
 
