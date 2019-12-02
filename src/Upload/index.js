@@ -34,7 +34,7 @@ class DDUpload extends Component {
       const isGT = file.size / 1024 > maxSize;
       if (isGT) {
         message.error(`请上传${maxSize}KB以下文件`);
-        throw new Error('请上传${maxSize}KB以下文件');
+        throw new Error(`请上传${maxSize}KB以下文件`);
       }
     }
 
@@ -42,15 +42,15 @@ class DDUpload extends Component {
       const isLT = file.size / 1024 > minSize;
       if (isLT) {
         message.error(`请上传${minSize}KB以上文件`);
-        throw new Error('请上传${minSize}KB以上文件');
+        throw new Error(`请上传${minSize}KB以上文件`);
       }
     }
 
     if (dim) {
       const { width, height } = await this.getImageSize(file);
       if (width !== dim.width || height !== dim.height) {
-        message.error(`图片尺寸为${dim.width}*${dim.height}，请重新上传`);
-        throw new Error('图片尺寸为${dim.width}*${dim.height}，请重新上传');
+        message.error(`图片尺寸与要求不符，应为${dim.width}*${dim.height}，请重新上传`);
+        throw new Error(`图片尺寸与要求不符，应为${dim.width}*${dim.height}，请重新上传`);
       }
     }
 
