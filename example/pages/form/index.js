@@ -13,6 +13,7 @@ import {
   FormTextArea,
   FormLabel,
   FormCheckbox,
+  Upload,
 } from '../../../dist';
 
 const Test = form => {
@@ -35,6 +36,49 @@ const ExampleForm = ({ form }) => {
 
   return (
     <Form api={form} layout="horizontal" labelCol={{ span: 4 }} wrapperCol={{ span: 14 }}>
+      <Upload
+        id="upload"
+        init={{
+          full_url:
+            'https://chain-static.codoon.com/upload/2019-03-21/a276000e-621a-4d28-9a24-3d28361e66a3.png!large',
+        }}
+        name="image"
+        action="http://localhost:9003/v1/club_admin/upload_image?club_id=1&club_user_id=1"
+        label="upload"
+        // ext={["video/mp4"]}
+        // ext={["application/zip"]}
+        ext={['', 'application/macbinary']}
+        labelCol={{ span: 4 }}
+        wrapperCol={{ span: 14 }}
+        // dim={{ width: 100, height: 100 }}
+        listType="picture"
+        onChange={() => console.log('change')}
+        formatApi={res => {
+          return {};
+          // if (!res) {
+          //   message.error('服务器繁忙');
+          //   return false;
+          // }
+
+          // if (res.url) {
+          // return { url: res.url, full_url: res.url };
+          // } else {
+          //   message.error(res.detail || '服务器繁忙');
+          //   return false;
+          // }
+        }}
+        imageStyle={{ width: 338, height: 140 }}
+        // editable={false}
+        preview
+        rules={['required']}
+        right={
+          <Button style={{ marginLeft: 8 }} onClick={e => e.stopPropagation()}>
+            换一换
+          </Button>
+        }
+      >
+        {(value, loading) => <span>111</span>}
+      </Upload>
       <Button type="primary" onClick={onSave}>
         保存
       </Button>

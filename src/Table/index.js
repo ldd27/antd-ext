@@ -1,28 +1,26 @@
-import React from "react";
-import { Table } from "antd";
-import Ellipsis from "../Ellipsis";
+import React from 'react';
+import { Table, Tooltip } from 'antd';
 
 const DDTable = ({ page, showScroll, showIndex, ...tableProps }) => {
   const current = tableProps.pagination && (tableProps.pagination.current || 1);
-  const pageSize =
-    tableProps.pagination && (tableProps.pagination.pageSize || 10);
+  const pageSize = tableProps.pagination && (tableProps.pagination.pageSize || 10);
   const total = tableProps.pagination && (tableProps.pagination.total || 0);
 
   if (showIndex) {
     tableProps.columns = [
       {
-        title: "序号",
-        dataIndex: "columnIndex",
+        title: '序号',
+        dataIndex: 'columnIndex',
         width: 60,
-        align: "center",
+        align: 'center',
         render: (text, row, index) => {
           if (tableProps.pagination) {
             return (current - 1) * pageSize + index + 1;
           }
           return index + 1;
-        }
+        },
       },
-      ...tableProps.columns
+      ...tableProps.columns,
     ];
   }
 
@@ -31,17 +29,17 @@ const DDTable = ({ page, showScroll, showIndex, ...tableProps }) => {
     const col = tableProps.columns[i];
     col.key = i;
     if (!col.align) {
-      col.align = "center";
+      col.align = 'center';
     }
-    if (col.max) {
+    if (col.ellipsis) {
       if (tableProps.columns[i].render) {
         tableProps.columns[i].render = (text, row, index) => {
           const rs = tableProps.columns[i].render(text, row, index);
-          return <Ellipsis title={rs} max={col.max} />;
+          return <Tooltip title={rs}>{rs}</Tooltip>;
         };
       } else {
         tableProps.columns[i].render = (text, row, index) => {
-          return <Ellipsis title={text} max={col.max} />;
+          return <Tooltip title={text}>{text}</Tooltip>;
         };
       }
     }
@@ -49,10 +47,9 @@ const DDTable = ({ page, showScroll, showIndex, ...tableProps }) => {
 
   const newTableProps = {
     ...tableProps,
-    pagination:
-      tableProps.pagination && total > pageSize ? tableProps.pagination : false,
-    size: tableProps.size ? tableProps.size : "small",
-    bordered: tableProps.bordered !== undefined ? tableProps.bordered : true
+    pagination: tableProps.pagination && total > pageSize ? tableProps.pagination : false,
+    size: tableProps.size ? tableProps.size : 'small',
+    bordered: tableProps.bordered !== undefined ? tableProps.bordered : true,
     // scroll: showScroll ? { x: 1024 } : {},
   };
   return <Table {...newTableProps} />;
