@@ -1,132 +1,144 @@
-import React, { Component } from 'react';
+import React, { Fragment } from 'react';
 import { Form } from 'antd';
-import { createRules } from '../utils';
+import { createRules } from '../util';
+import { warning } from '../util/warning';
 
-export default class FormItem extends Form.Item {
-  componentDidMount() {
-    const { form, id, init } = this.props;
-    if (!form) return;
-    form.setFieldsValue({ [id]: init });
-  }
+const FormItem = props => {
+  const {
+    id,
+    colon,
+    dependencies,
+    extra,
+    getValueFromEvent,
+    hasFeedback,
+    help,
+    htmlFor,
+    noStyle,
+    label,
+    labelAlign,
+    labelCol,
+    name,
+    normalize,
+    required,
+    rules,
+    shouldUpdate,
+    trigger,
+    validateStatus,
+    validateTrigger,
+    valuePropName,
+    wrapperCol,
+    showRequired,
+    editable = true,
+    children,
+    before,
+    after,
+    show,
+  } = props;
 
-  render() {
-    const {
-      id,
-      init,
-      showRequired,
-      rules,
-      labelCol,
-      wrapperCol,
-      label,
-      form,
-      editable,
-      help,
-      extra,
-      children,
-      onChange,
-      getValueFromEvent,
-      valuePropName = 'value',
-      validateFirst = true,
-      before,
-      after,
-      ...inputPorps
-    } = this.props;
+  warning(!('id' in props), `id is remove, please use name`);
 
-    const layout = {
-      labelCol,
-      wrapperCol,
-    };
-    if (!labelCol) delete layout.labelCol;
-    if (!wrapperCol) delete layout.wrapperCol;
+  const layout = {
+    labelCol,
+    wrapperCol,
+  };
+  if (!labelCol) delete layout.labelCol;
+  if (!wrapperCol) delete layout.wrapperCol;
 
-    if (!form) {
-      return (
-        <Form.Item label={label} {...layout} help={help} extra={extra}>
-          {before}
-          {children}
-          {after}
-        </Form.Item>
-      );
-    }
-
-    // getFieldDecorator不能装饰纯函数组件
-    const { getFieldDecorator } = form;
+  const newRules = createRules(label, name || id, rules);
+  if (!editable) {
     return (
       <Form.Item
         label={label}
         {...layout}
         help={help}
         extra={extra}
-        required={inputPorps.editable && required && showRequired}
+        valuePropName={valuePropName}
+        getValueFromEvent={getValueFromEvent}
+        shouldUpdate
+        noStyle={noStyle}
       >
-        {before}
-        {getFieldDecorator(id, {
-          initialValue: init,
-          rules: createRules(label, id, rules),
-          onChange,
-          valuePropName,
-          getValueFromEvent,
-          validateFirst,
-        })(children)}
-        {after}
+        {({ getFieldValue }) => (
+          <Fragment>
+            {before}
+            {getFieldValue()[name || id]}
+            {after}
+          </Fragment>
+        )}
       </Form.Item>
     );
   }
-}
 
-// const FormItem = ({
-//   id,
-//   init,
-//   showRequired,
-//   rules,
-//   labelCol,
-//   wrapperCol,
-//   label,
-//   form,
-//   editable,
-//   help,
-//   extra,
-//   children,
-//   onChange,
-//   getValueFromEvent,
-//   valuePropName = "value",
-//   validateFirst = true,
-//   before,
-//   after,
-//   ...inputPorps
-// }) => {
-//   if (!form) {
-//     return (
-//       <Form.Item label={label} labelCol={labelCol} wrapperCol={wrapperCol}>
-//         {children}
-//       </Form.Item>
-//     );
-//   }
+  if (show) {
+    return (
+      <FormItem noStyle shouldUpdate>
+        {_props => {
+          if (!show(_props)) return null;
+          return (
+            <Form.Item
+              name={name || id}
+              label={label}
+              {...layout}
+              help={help}
+              extra={extra}
+              required={editable && required && showRequired}
+              rules={newRules}
+              valuePropName={valuePropName}
+              getValueFromEvent={getValueFromEvent}
+              shouldUpdate={shouldUpdate}
+              noStyle={noStyle}
+            >
+              {children}
+            </Form.Item>
+          );
+        }}
+      </FormItem>
+    );
+  }
 
-//   // getFieldDecorator不能装饰纯函数组件
-//   const { getFieldDecorator } = form;
+  if (before || after) {
+    return (
+      <Form.Item
+        label={label}
+        {...layout}
+        help={help}
+        extra={extra}
+        required={editable && required && showRequired}
+        rules={newRules}
+        noStyle={noStyle}
+      >
+        <Form.Item noStyle>{before}</Form.Item>
+        <Form.Item
+          name={name || id}
+          rules={newRules}
+          valuePropName={valuePropName}
+          getValueFromEvent={getValueFromEvent}
+          shouldUpdate={shouldUpdate}
+          noStyle
+        >
+          {children}
+        </Form.Item>
+        <Form.Item noStyle>{after}</Form.Item>
+      </Form.Item>
+    );
+  }
 
-//   return (
-//     <Form.Item
-//       label={label}
-//       labelCol={labelCol}
-//       wrapperCol={wrapperCol}
-//       help={help}
-//       extra={extra}
-//       required={inputPorps.editable && required && showRequired}
-//     >
-//       {before}
-//       {getFieldDecorator(id, {
-//         initialValue: init,
-//         rules: createRules(label, id, rules),
-//         onChange,
-//         valuePropName,
-//         getValueFromEvent,
-//         validateFirst
-//       })(children)}
-//       {after}
-//     </Form.Item>
-//   );
-// };
+  return (
+    <Form.Item
+      name={name || id}
+      label={label}
+      {...layout}
+      help={help}
+      extra={extra}
+      required={editable && required && showRequired}
+      rules={newRules}
+      valuePropName={valuePropName}
+      getValueFromEvent={getValueFromEvent}
+      shouldUpdate={shouldUpdate}
+      noStyle={noStyle}
+    >
+      {children}
+    </Form.Item>
+  );
+};
 
-// export default FormItem;
+export default FormItem;

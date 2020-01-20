@@ -1,30 +1,29 @@
 import React from 'react';
-import { Modal, Button } from 'antd';
+import { Modal as AModal, Button } from 'antd';
 
-const DDModal = ({ children, modalType, centered = true, ...modalProps }) => {
-  const footer = [];
+const Modal = ({ visible, children, modalType, ...restProps }) => {
+  let modalProps = {};
+
   if (modalType === 'detail') {
-    footer.push(<Button key="back" type="ghost" onClick={modalProps.onCancel}>关闭</Button>);
     modalProps = {
       ...modalProps,
-      footer,
-    };
-  } else {
-    modalProps = {
-      ...modalProps,
+      footer: [
+        <Button key="back" type="ghost" onClick={restProps.onCancel}>
+          关闭
+        </Button>,
+      ],
     };
   }
 
   modalProps = {
     ...modalProps,
-    centered,
-  }
+    centered: true,
+    destroyOnClose: true,
+    ...restProps,
+    visible,
+  };
 
-  return (
-    <Modal {...modalProps}>
-      {children}
-    </Modal>
-  );
+  return <AModal {...modalProps}>{children}</AModal>;
 };
 
-export default DDModal;
+export default Modal;

@@ -1,8 +1,5 @@
-node_modules
-.docz
-dist
-.umi
-yarn.lock
-yarn-error.log
-lib
-es
+/yarn.lock
+/package-lock.json
+/dist
+/.docz
+/node_modules

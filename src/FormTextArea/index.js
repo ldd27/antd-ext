@@ -2,25 +2,20 @@ import React from 'react';
 import { Input } from 'antd';
 import FormItem from '../FormItem';
 import FormLabel from '../FormLabel';
-import { getFormItemProps } from '../utils';
+import { getFormItemProps } from '../util';
 
 const { TextArea } = Input;
-const FormTextArea = (props) => {
+const FormTextArea = props => {
   const [formItemProps, restProps] = getFormItemProps(props);
-  const {
-    editable,
-    autosize = true,
-  } = props;
+  const { name, editable } = formItemProps;
 
   if (editable === false) {
-    return (
-      <FormLabel {...formItemProps} form={undefined} />
-    );
+    return <FormLabel {...formItemProps}>{({ getFieldValue }) => getFieldValue()[name]}</FormLabel>;
   }
 
   return (
     <FormItem {...formItemProps}>
-      <TextArea autosize={autosize} {...restProps} />
+      <TextArea autoSize={{ minRows: 3 }} {...restProps} />
     </FormItem>
   );
 };

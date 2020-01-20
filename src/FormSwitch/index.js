@@ -2,20 +2,18 @@ import React from 'react';
 import { Switch } from 'antd';
 import FormItem from '../FormItem';
 import FormLabel from '../FormLabel';
-import { getFormItemProps } from '../utils';
+import { getFormItemProps } from '../util';
 
-const FormSwitch = (props) => {
+const FormSwitch = props => {
   const [formItemProps, restProps] = getFormItemProps(props);
-  const {
-    init,
-    editable,
-    checkedChildren,
-    unCheckedChildren,
-  } = props;
+  const { name } = formItemProps;
+  const { editable, checkedChildren, unCheckedChildren } = props;
 
   if (editable === false) {
     return (
-      <FormLabel {...formItemProps} init={init ? checkedChildren : unCheckedChildren} />
+      <FormLabel {...formItemProps}>
+        {({ getFieldValue }) => (getFieldValue()[name] ? checkedChildren : unCheckedChildren)}
+      </FormLabel>
     );
   }
 

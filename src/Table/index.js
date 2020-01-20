@@ -1,58 +1,74 @@
 import React from 'react';
-import { Table, Tooltip } from 'antd';
+import { Table as ATable } from 'antd';
+import dayjs from 'dayjs';
+import { warning } from '../util/warning';
 
-const DDTable = ({ page, showScroll, showIndex, ...tableProps }) => {
-  const current = tableProps.pagination && (tableProps.pagination.current || 1);
-  const pageSize = tableProps.pagination && (tableProps.pagination.pageSize || 10);
-  const total = tableProps.pagination && (tableProps.pagination.total || 0);
+const Table = ({ ...restProps }) => {
+  const { pagination, showIndex } = restProps;
+  const tableProps = {
+    pagination: pagination ? { hideOnSinglePage: true, ...pagination } : false,
+    bordered: true,
+    size: 'small',
+    rowKey: 'id',
+    ...restProps,
+  };
+
+  // warning(!('showIndex' in restProps), `showIndex is remove, please use dataType:'index'`);
+  warning('rowKey' in restProps, `rowKey is missing, please set rowKey`);
 
   if (showIndex) {
     tableProps.columns = [
       {
         title: '序号',
-        dataIndex: 'columnIndex',
         width: 60,
-        align: 'center',
-        render: (text, row, index) => {
-          if (tableProps.pagination) {
-            return (current - 1) * pageSize + index + 1;
-          }
-          return index + 1;
-        },
+        dataType: 'index',
       },
       ...tableProps.columns,
     ];
   }
 
-  // 生成key，aligin属性
+  // eslint-disable-next-line no-plusplus
   for (let i = 0; i < tableProps.columns.length; i++) {
     const col = tableProps.columns[i];
     col.key = i;
     if (!col.align) {
       col.align = 'center';
     }
-    if (col.ellipsis) {
-      if (tableProps.columns[i].render) {
+
+    switch (col.dataType) {
+      case 'index':
         tableProps.columns[i].render = (text, row, index) => {
-          const rs = tableProps.columns[i].render(text, row, index);
-          return <Tooltip title={rs}>{rs}</Tooltip>;
+          if (pagination) {
+            const { current, pageSize } = pagination;
+            return (current - 1) * pageSize + index + 1;
+          }
+          return index + 1;
         };
-      } else {
-        tableProps.columns[i].render = (text, row, index) => {
-          return <Tooltip title={text}>{text}</Tooltip>;
-        };
-      }
+        break;
+      case 'dateTime':
+        tableProps.columns[i].render = text => dayjs.unix(text).format('YYYY-MM-DD HH:mm:ss');
+        break;
+      case 'date':
+        tableProps.columns[i].render = text => dayjs.unix(text).format('YYYY-MM-DD');
+        break;
+      case 'time':
+        tableProps.columns[i].render = text => dayjs.unix(text).format('HH:mm:ss');
+        break;
+      default:
+        break;
+    }
+
+    if (col.dataEnum) {
+      tableProps.columns[i].render = text => {
+        if (text in col.dataEnum) {
+          return col.dataEnum[text];
+        }
+        return text;
+      };
     }
   }
 
-  const newTableProps = {
-    ...tableProps,
-    pagination: tableProps.pagination && total > pageSize ? tableProps.pagination : false,
-    size: tableProps.size ? tableProps.size : 'small',
-    bordered: tableProps.bordered !== undefined ? tableProps.bordered : true,
-    // scroll: showScroll ? { x: 1024 } : {},
-  };
-  return <Table {...newTableProps} />;
+  return <ATable {...tableProps} />;
 };
 
-export default DDTable;
+export default Table;

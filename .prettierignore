@@ -1,0 +1,6 @@
+**/*.md
+**/*.mdx
+package.json
+.umi
+.umi-production
+/dist

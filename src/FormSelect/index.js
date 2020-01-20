@@ -1,42 +1,42 @@
 import React from 'react';
 import { Select } from 'antd';
-import find from 'lodash/find';
 import FormItem from '../FormItem';
 import FormLabel from '../FormLabel';
-import { getFormItemProps, getSelectLabel } from '../utils';
+import { getFormItemProps, getSelectLabel } from '../util';
 
-const FormSelect = (props) => {
+const FormSelect = props => {
   const [formItemProps, restProps] = getFormItemProps(props);
-  const {
-    options,
-    optionLabel,
-    optionValue,
-    editable,
-    labelInValue,
-    init,
-  } = props;
+  const { name, editable } = formItemProps;
+  const { options = [], optionLabel, optionValue, ...selectProps } = restProps;
+  const { labelInValue } = selectProps;
 
-  const newOptions = options || [];
-  
   if (editable === false) {
-    let obj = null;
-    if (labelInValue) {
-      obj = find(newOptions, o => o[optionValue || 'value'] === init.key);
-    } else {
-      obj = find(newOptions, o => o[optionValue || 'value'] === init);
-    }
     return (
-      <FormLabel
-        {...formItemProps}
-        init={obj ? getSelectLabel(obj, optionLabel) : init}
-      />
+      <FormLabel {...formItemProps}>
+        {({ getFieldValue }) => {
+          let obj = null;
+          if (labelInValue) {
+            obj = options.find(f => f[optionValue || 'value'] === getFieldValue()[name].key);
+          } else {
+            obj = options.find(f => f[optionValue || 'value'] === getFieldValue()[name]);
+          }
+          return obj ? getSelectLabel(obj, optionLabel) : getFieldValue()[name];
+        }}
+      </FormLabel>
     );
   }
 
   return (
     <FormItem {...formItemProps}>
-      <Select {...restProps}>
-        {newOptions.map(option => (<Select.Option key={option[optionValue || 'value']} value={option[optionValue || 'value']}>{getSelectLabel(option, optionLabel)}</Select.Option>))}
+      <Select {...selectProps}>
+        {options.map(option => (
+          <Select.Option
+            key={option[optionValue || 'value']}
+            value={option[optionValue || 'value']}
+          >
+            {getSelectLabel(option, optionLabel)}
+          </Select.Option>
+        ))}
       </Select>
     </FormItem>
   );
