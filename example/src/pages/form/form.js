@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input } from 'antd';
+import { Input, Row, Col } from 'antd';
 import {
   Modal,
   Form,
@@ -85,6 +85,20 @@ const Index = ({ item, visible, onCancel, onOk, editable }) => {
           after="after"
           editable={editable}
         />
+        <FormItem noStyle show={({ getFieldValue }) => getFieldValue('name2') === '111'}>
+          <Row>
+            <Col span={12}>
+              <FormInputNumber
+                name="name6"
+                label="name6"
+                rules={['required']}
+                before="before"
+                // after="after"
+                // editable={editable}
+              />
+            </Col>
+          </Row>
+        </FormItem>
         <FormCheckbox
           name="name7"
           label="name7"

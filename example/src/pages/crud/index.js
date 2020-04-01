@@ -7,13 +7,15 @@ const Index = () => {
   const [CUForm] = Form.useForm();
   const ref = React.useRef();
 
-  const getTableData = ({ current, pageSize, filters, sorter, ...rest }) =>
-    fetch(`https://randomuser.me/api?results=55&page=${current}&size=${pageSize}`)
+  const getTableData = ({ current, pageSize, filters, sorter, ...rest }) => {
+    console.log(rest);
+    return fetch(`https://randomuser.me/api?results=55&page=${current}&size=${pageSize}`)
       .then(res => res.json())
       .then(res => ({
         total: res.info.results,
         data_list: res.results,
       }));
+  };
 
   const filter = {
     form: filterForm,
@@ -21,6 +23,7 @@ const Index = () => {
     children: (
       <Fragment>
         <FormSelect
+          // id="xx"
           name="gender"
           label="gender"
           options={[

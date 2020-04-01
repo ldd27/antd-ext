@@ -35,7 +35,7 @@ const FormItem = props => {
     show,
   } = props;
 
-  warning(!('id' in props), `id is remove, please use name`);
+  warning(!('id' in props) || !props.id, `id[${id}] is remove, please use name`);
 
   const layout = {
     labelCol,
@@ -87,7 +87,9 @@ const FormItem = props => {
               shouldUpdate={shouldUpdate}
               noStyle={noStyle}
             >
+              {/* {before} */}
               {children}
+              {/* {after} */}
             </Form.Item>
           );
         }}
@@ -106,7 +108,7 @@ const FormItem = props => {
         rules={newRules}
         noStyle={noStyle}
       >
-        <Form.Item noStyle>{before}</Form.Item>
+        {before ? <Form.Item noStyle>{before}</Form.Item> : null}
         <Form.Item
           name={name || id}
           rules={newRules}
@@ -117,7 +119,7 @@ const FormItem = props => {
         >
           {children}
         </Form.Item>
-        <Form.Item noStyle>{after}</Form.Item>
+        {after ? <Form.Item noStyle>{after}</Form.Item> : null}
       </Form.Item>
     );
   }
@@ -136,7 +138,9 @@ const FormItem = props => {
       shouldUpdate={shouldUpdate}
       noStyle={noStyle}
     >
+      {/* {before ? <Form.Item noStyle>{before}</Form.Item> : null} */}
       {children}
+      {/* {after ? <Form.Item noStyle>{after}</Form.Item> : null} */}
     </Form.Item>
   );
 };
