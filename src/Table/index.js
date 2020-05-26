@@ -32,9 +32,10 @@ const DDTable = ({ page, showScroll, showIndex, ...tableProps }) => {
       col.align = 'center';
     }
     if (col.ellipsis) {
-      if (tableProps.columns[i].render) {
+      const render = tableProps.columns[i].render;
+      if (render) {
         tableProps.columns[i].render = (text, row, index) => {
-          const rs = tableProps.columns[i].render(text, row, index);
+          const rs = render(text, row, index);
           return <Tooltip title={rs}>{rs}</Tooltip>;
         };
       } else {
@@ -42,6 +43,8 @@ const DDTable = ({ page, showScroll, showIndex, ...tableProps }) => {
           return <Tooltip title={text}>{text}</Tooltip>;
         };
       }
+
+      // delete col.ellipsis;
     }
   }
 
