@@ -1,6 +1,6 @@
 {
   "name": "antd-ext",
-  "version": "0.1.0-alpha.13",
+  "version": "0.1.0-alpha.14",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -16,7 +16,7 @@
     "example": "APP_ROOT=example umi dev",
     "dev": "father build --watch",
     "build": "father build",
-    "pub": "yarn run build && yarn publish",
+    "pub:prod": "yarn run build && yarn publish",
     "pub:alpha": "yarn run build && yarn publish --tag alpha"
   },
   "peerDependencies": {
