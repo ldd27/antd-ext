@@ -1,6 +1,6 @@
 {
   "name": "antd-ext",
-  "version": "0.1.0-alpha.14",
+  "version": "0.1.0-alpha.15",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -32,8 +32,8 @@
   "dependencies": {
     "@ant-design/icons": "^4.0.0-rc.0",
     "@umijs/hooks": "^1.5.3",
-    "antd": "^4.0.3",
+    "antd": "^4.6.5",
     "dayjs": "^1.8.19",
-    "rc-picker": "^1.3.0"
+    "rc-picker": "^2.2.1"
   }
 }
