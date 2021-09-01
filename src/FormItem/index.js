@@ -3,6 +3,12 @@ import { Form } from 'antd';
 import { createRules } from '../util';
 import { warning } from '../util/warning';
 
+const checkRequired = (required, rules) => {
+  if (required !== undefined) return { required: required };
+  if (!rules) return {};
+  return rules.includes('required') ? { required: true } : {};
+};
+
 const FormItem = props => {
   const {
     id,
@@ -27,7 +33,6 @@ const FormItem = props => {
     validateTrigger,
     valuePropName,
     wrapperCol,
-    showRequired,
     editable = true,
     children,
     before,
@@ -80,7 +85,7 @@ const FormItem = props => {
               {...layout}
               help={help}
               extra={extra}
-              required={editable && required && showRequired}
+              {...checkRequired(required)}
               rules={newRules}
               valuePropName={valuePropName}
               getValueFromEvent={getValueFromEvent}
@@ -104,7 +109,7 @@ const FormItem = props => {
         {...layout}
         help={help}
         extra={extra}
-        required={editable && required && showRequired}
+        {...checkRequired(required, rules)}
         rules={newRules}
         noStyle={noStyle}
       >
@@ -131,16 +136,14 @@ const FormItem = props => {
       {...layout}
       help={help}
       extra={extra}
-      required={editable && required && showRequired}
+      {...checkRequired(required)}
       rules={newRules}
       valuePropName={valuePropName}
       getValueFromEvent={getValueFromEvent}
       shouldUpdate={shouldUpdate}
       noStyle={noStyle}
     >
-      {/* {before ? <Form.Item noStyle>{before}</Form.Item> : null} */}
       {children}
-      {/* {after ? <Form.Item noStyle>{after}</Form.Item> : null} */}
     </Form.Item>
   );
 };

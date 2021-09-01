@@ -1,3 +1,8 @@
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
+
+dayjs.locale('zh-ch');
+
 export { default as Modal } from './Modal';
 export { default as Image } from './Image';
 export { default as Table } from './Table';
